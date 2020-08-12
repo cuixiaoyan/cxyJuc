@@ -266,3 +266,232 @@ class Ticket2 {
 
 >生产者和消费者问题 Synchronized 版
 
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200812160048556.png" alt="image-20200812160048556" style="zoom:50%;" />
+
+出现如下问题，顺序混乱。
+
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200812155552631.png" alt="image-20200812155552631" style="zoom:50%;" />
+
+
+
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200812160311571.png" alt="image-20200812160311571" style="zoom:50%;" />
+
+```java
+package com.cxy.pc;
+
+
+import javax.xml.crypto.Data;
+
+/**
+ * @program: cxyJuc
+ * @description: 线程之间的通讯问题，生产者和消费者模式，等待唤醒，通知唤醒。
+ * 线程交替执行 A B 操作同一个变量 num = 0
+ * A num + 1
+ * B num - 1
+ * @author: cuixy
+ * @create: 2020-08-12 15:34
+ **/
+public class A {
+    public static void main(String[] args) {
+        MyData myData = new MyData();
+
+        new Thread(() -> {
+            for (int i = 0; i < 10; i++) {
+                try {
+                    myData.increment();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, "A").start();
+
+        new Thread(() -> {
+            for (int i = 0; i < 10; i++) {
+                try {
+                    myData.decrement();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, "B").start();
+
+        new Thread(() -> {
+            for (int i = 0; i < 10; i++) {
+                try {
+                    myData.increment();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, "C").start();
+
+        new Thread(() -> {
+            for (int i = 0; i < 10; i++) {
+                try {
+                    myData.decrement();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, "D").start();
+
+    }
+
+}
+
+class MyData {
+    private int number = 0;
+
+    //+1
+    public synchronized void increment() throws InterruptedException {
+        //if修改为while
+        while (number != 0) { //0
+            //等待
+            this.wait();
+        }
+        number++;
+        System.out.println(Thread.currentThread().getName() + "=>" + number);
+        //通知其他线程+1执行完毕。
+        this.notifyAll();
+
+    }
+
+    //-1
+    public synchronized void decrement() throws InterruptedException {
+        //if修改为while
+        while (number == 0) {//1
+            //等待
+            this.wait();
+        }
+        number--;
+        System.out.println(Thread.currentThread().getName() + "=>" + number);
+        //通知其他线程 -1完毕。
+        this.notifyAll();
+    }
+
+
+}
+```
+
+>JUC版的生产者和消费者问题
+
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200812160526730.png" alt="image-20200812160526730" style="zoom:50%;" />
+
+>Condition 精准的通知和唤醒线程
+
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200812164352319.png" alt="image-20200812164352319" style="zoom:50%;" />
+
+数据没有问题，但是顺序不整齐。
+
+```java
+package com.cxy.pc;
+
+
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+/**
+ * @program: cxyJuc
+ * @description: juc版的生产者和消费者。
+ * @author: cuixy
+ * @create: 2020-08-12 16:07
+ **/
+public class B {
+    public static void main(String[] args) {
+
+        MyData2 myData2 = new MyData2();
+
+        new Thread(() -> {
+            for (int i = 0; i < 10; i++) {
+                try {
+                    myData2.increment();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, "A").start();
+
+        new Thread(() -> {
+            for (int i = 0; i < 10; i++) {
+                try {
+                    myData2.decrement();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, "B").start();
+
+
+        new Thread(() -> {
+            for (int i = 0; i < 10; i++) {
+                try {
+                    myData2.increment();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, "C").start();
+
+        new Thread(() -> {
+            for (int i = 0; i < 10; i++) {
+                try {
+                    myData2.decrement();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, "D").start();
+
+
+    }
+
+}
+
+//判断等待，业务，通知。
+class MyData2 {
+    private int number = 0;
+
+    Lock lock = new ReentrantLock();
+    Condition condition = lock.newCondition();
+    //condtion.await(); 等待
+    //condition.signalAll(); 唤醒全部
+
+    //+1
+    public void increment() throws InterruptedException {
+        lock.lock();
+        try {
+            while (number != 0) {
+                condition.await();
+            }
+            number++;
+            System.out.println(Thread.currentThread().getName() + "=>" + number);
+            condition.signalAll();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    //-1
+    public void decrement() throws InterruptedException {
+        lock.lock();
+        try {
+            while (number == 0) {
+                condition.await();
+            }
+            number--;
+            System.out.println(Thread.currentThread().getName() + "=>" + number);
+            condition.signalAll();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+
+}
+```
+
