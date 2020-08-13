@@ -15,19 +15,8 @@ Java 真的可以开启线程吗？ ==开不了==
 
 ```java
 public synchronized void start() {
-        /**
-         * This method is not invoked for the main method thread or "system"
-         * group threads created/set up by the VM. Any new functionality added
-         * to this method in the future may have to also be added to the VM.
-         *
-         * A zero status value corresponds to state "NEW".
-         */
         if (threadStatus != 0)
             throw new IllegalThreadStateException();
-
-        /* Notify the group that this thread is about to be started
-         * so that it can be added to the group's list of threads
-         * and the group's unstarted count can be decremented. */
         group.add(this);
 
         boolean started = false;
@@ -40,8 +29,6 @@ public synchronized void start() {
                     group.threadStartFailed(this);
                 }
             } catch (Throwable ignore) {
-                /* do nothing. If start0 threw a Throwable then
-                  it will be passed up the call stack */
             }
         }
     }
@@ -494,4 +481,123 @@ class MyData2 {
 
 }
 ```
+
+## 有序执行
+
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200813153404112.png" alt="image-20200813153404112" style="zoom:50%;" />
+
+```java
+package com.cxy.pc;
+
+
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+/**
+ * @program: cxyJuc
+ * @description: juc版的生产者和消费者，有序版。
+ * @author: cuixy
+ * @create: 2020-08-12 16:07
+ **/
+public class C {
+    public static void main(String[] args) {
+
+        MyData3 myData3 = new MyData3();
+
+        new Thread(() -> {
+            for (int i = 0; i < 10; i++) {
+                myData3.printA();
+
+            }
+        }, "A").start();
+
+
+        new Thread(() -> {
+            for (int i = 0; i < 10; i++) {
+                myData3.printB();
+            }
+        }, "B").start();
+
+        new Thread(() -> {
+            for (int i = 0; i < 10; i++) {
+                myData3.printC();
+            }
+        }, "C").start();
+
+
+    }
+
+}
+
+//判断等待，业务，通知。
+class MyData3 {
+
+
+    Lock lock = new ReentrantLock();
+    Condition condition1 = lock.newCondition();
+    Condition condition2 = lock.newCondition();
+    Condition condition3 = lock.newCondition();
+    //1A 2B 3C
+    private int number = 1;
+
+    public void printA() {
+        lock.lock();
+        try {
+            while (number != 1) {
+                condition1.await();
+            }
+            System.out.println(Thread.currentThread().getName() + "=>" + number);
+            //唤醒指定的B
+            number = 2;
+            condition2.signal();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public void printB() {
+        lock.lock();
+        try {
+            while (number != 2) {
+                condition2.await();
+            }
+            System.out.println(Thread.currentThread().getName() + "=>" + number);
+            //唤醒指定的C
+            number = 3;
+            condition3.signal();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public void printC() {
+        lock.lock();
+        try {
+            while (number != 3) {
+                condition3.await();
+            }
+            System.out.println(Thread.currentThread().getName() + "=>" + number);
+            //唤醒指定的A
+            number = 1;
+            condition1.signal();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+
+}
+```
+
+# 8锁现象
+
+如何判断锁的是谁！永远的知道什么锁，锁到底锁的是谁！
+深刻理解我们的锁
 
