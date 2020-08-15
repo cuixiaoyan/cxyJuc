@@ -1,3 +1,5 @@
+
+
 # 什么是JUC
 
 业务：普通的线程代码 Thread
@@ -600,4 +602,243 @@ class MyData3 {
 
 如何判断锁的是谁！永远的知道什么锁，锁到底锁的是谁！
 深刻理解我们的锁
+
+```java
+package com.cxy.lock8;
+/**
+ * @program: cxyJuc
+ * @description: 8锁问题。
+ * @author: cuixy
+ * @create: 2020-08-15 10:12
+ **/
+import java.util.concurrent.TimeUnit;
+/**
+ * 8锁，就是关于锁的8个问题
+ * 1、标准情况下，两个线程先打印 发短信还是 打电话？ 1/发短信 2/打电话
+ * 1、sendSms延迟4秒，两个线程先打印 发短信还是 打电话？ 1/发短信 2/打电话
+ */
+public class Test1 {
+    public static void main(String[] args) {
+        Phone phone = new Phone();
+        new Thread(() -> {
+            phone.sendSms();
+        }, "A").start();
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        new Thread(() -> {
+            phone.call();
+        }, "B").start();
+    }
+}
+
+class Phone {
+    // synchronized 锁的对象是方法的调用者！、
+    // 两个方法用的是同一个锁，谁先拿到谁执行！
+    public synchronized void sendSms() {
+        try {
+            TimeUnit.SECONDS.sleep(4);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("发短信");
+
+    }
+    public synchronized void call() {
+        System.out.println("打电话");
+    }
+}
+```
+
+```java
+package com.cxy.lock8;
+
+import java.util.concurrent.TimeUnit;
+
+/**
+ * @program: cxyJuc
+ * @description:
+ * @author: cuixy
+ * @create: 2020-08-15 10:44
+ **/
+/**
+* 3、 增加了一个普通方法后！先执行发短信还是Hello？ 普通方法
+* 4、 两个对象，两个同步方法， 发短信还是 打电话？ // 打电话
+*/
+
+public class Test2 {
+    public static void main(String[] args) {
+        //两个对象，两个调用者，两把锁。
+        Phone2 phone1 = new Phone2();
+        Phone2 phone2 = new Phone2();
+
+        //锁的存在
+        new Thread(() -> {
+            phone1.sendSms();
+        }, "A").start();
+
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        new Thread(() -> {
+            phone2.hello();
+            phone2.call();
+        }, "B").start();
+
+
+    }
+
+}
+
+class Phone2 {
+
+    //synchronized 锁的对象，是方法的调用者。
+    public synchronized void sendSms() {
+        try {
+            TimeUnit.SECONDS.sleep(4);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("发短信");
+    }
+
+    public synchronized void call() {
+        System.out.println("打电话");
+    }
+
+    //这了没有锁，不是同步方法，不受锁的影响。
+    public void hello() {
+        System.out.println("hello");
+    }
+
+
+}
+```
+
+```java
+package com.cxy.lock8;
+
+/**
+ * @program: cxyJuc
+ * @description:
+ * @author: cuixy
+ * @create: 2020-08-15 11:04
+ **/
+
+import java.util.concurrent.TimeUnit;
+
+/**
+ * 5、增加两个静态的同步方法，只有一个对象，先打印 发短信？打电话？
+ * 6、两个对象！增加两个静态的同步方法， 先打印 发短信？打电话？
+ */
+
+public class Test3 {
+    public static void main(String[] args) {
+        // 两个对象的Class类模板只有一个，static，锁的是Class
+        Phone3 phone1 = new Phone3();
+        Phone3 phone2 = new Phone3();
+
+        new Thread(() -> {
+            phone1.sendSms();
+        }, "A").start();
+
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        new Thread(() -> {
+            phone2.call();
+        }, "B").start();
+    }
+
+}
+
+// Phone3唯一的一个 Class 对象
+class Phone3 {
+    // synchronized 锁的对象是方法的调用者！
+    // static 静态方法
+    // 类一加载就有了！锁的是Class
+    public static synchronized void sendSms() {
+        try {
+            TimeUnit.SECONDS.sleep(4);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("发短信");
+    }
+
+    public static synchronized void call() {
+        System.out.println("打电话");
+    }
+}
+```
+
+```java
+package com.cxy.lock8;
+
+/**
+ * @program: cxyJuc
+ * @description:
+ * @author: cuixy
+ * @create: 2020-08-15 11:11
+ **/
+
+import java.util.concurrent.TimeUnit;
+
+/**
+ * 1、1个静态的同步方法，1个普通的同步方法 ，一个对象，先打印 发短信？打电话？
+ * 2、1个静态的同步方法，1个普通的同步方法 ，两个对象，先打印 发短信？打电话？
+ */
+public class Test4 {
+    public static void main(String[] args) {
+        Phone4 phone1 = new Phone4();
+        Phone4 phone2 = new Phone4();
+
+        new Thread(() -> {
+            phone1.sendSms();
+        }, "A").start();
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        new Thread(() -> {
+            phone2.call();
+        }, "B").start();
+
+    }
+
+}
+
+class Phone4 {
+
+    public static synchronized void sendSms() {
+        try {
+            TimeUnit.SECONDS.sleep(4);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("发短信");
+    }
+
+    //普通的同步方法，锁的调用者。
+    public synchronized void call() {
+        System.out.println("打电话");
+    }
+
+
+}
+```
+
+> 小结
+
+new this 具体的一个手机
+static Class 唯一的一个模板
 
