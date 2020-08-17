@@ -842,3 +842,139 @@ class Phone4 {
 new this 具体的一个手机
 static Class 唯一的一个模板
 
+# 集合类不安全
+
+## List
+
+```java
+package com.cxy.unsafe;
+
+import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+/**
+ * @program: cxyJuc
+ * @description: List是不安全的。
+ * @author: cuixy
+ * @create: 2020-08-17 11:09
+ **/
+public class ListTest {
+    public static void main(String[] args) {
+        //并发下ArrayList是不安全的，java.util.ConcurrentModificationException 并发修改异常。
+        //ArrayList<String> list = new ArrayList<>();
+
+        //方案1
+        //Vector<String> list = new Vector<>();
+        //方案2
+        //List<Object> list = Collections.synchronizedList(new ArrayList<>());
+        //方案3
+        CopyOnWriteArrayList<Object> list = new CopyOnWriteArrayList<>();
+        //CopyOnWrite 写入时复制，多个线程调用的时候，List，读取的时候，固定的，写入(覆盖)
+        //在写入的时候避免覆盖，造成数据问题。读写分离。
+        //copyOnWriteArrayList快。
+
+        for (int i = 0; i < 10; i++) {
+            new Thread(() -> {
+                list.add(UUID.randomUUID().toString().substring(0, 5));
+                System.out.println(list);
+            }, String.valueOf(i)).start();
+
+        }
+
+
+    }
+
+}
+
+```
+
+## Set
+
+```java
+package com.cxy.unsafe;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArraySet;
+
+/**
+ * @program: cxyJuc
+ * @description: 测试Set。
+ * @author: cuixy
+ * @create: 2020-08-17 11:39
+ **/
+public class SetTest {
+    public static void main(String[] args) {
+        //同样的错误，java.util.ConcurrentModificationException。
+        //HashSet<String> set = new HashSet<>();
+        //方案1
+        //Set<Object> set = Collections.synchronizedSet(new HashSet<>());
+        //方案2
+        CopyOnWriteArraySet<String> set = new CopyOnWriteArraySet<>();
+
+        for (int i = 0; i < 50; i++) {
+            new Thread(() -> {
+                set.add(UUID.randomUUID().toString().substring(0, 5));
+                System.out.println(set);
+            }, String.valueOf(i)).start();
+        }
+    }
+}
+```
+
+### hashset底层
+
+```java
+/**
+     * Constructs a new, empty set; the backing <tt>HashMap</tt> instance has
+     * default initial capacity (16) and load factor (0.75).
+     */
+    public HashSet() {
+        map = new HashMap<>();
+    }
+
+    public boolean add(E e) {
+        return map.put(e, PRESENT)==null;
+    }
+    // Dummy value to associate with an Object in the backing Map
+    private static final Object PRESENT = new Object();
+```
+
+## Map
+
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200817134559319.png" alt="image-20200817134559319" style="zoom:50%;" />
+
+```java
+package com.cxy.unsafe;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+
+/**
+ * @program: cxyJuc
+ * @description:
+ * @author: cuixy
+ * @create: 2020-08-17 13:38
+ **/
+public class MapTest {
+    public static void main(String[] args) {
+        //同样报错，java.util.ConcurrentModificationException。
+        //Map<String, String> map = new HashMap<>();
+        //解决方案。
+        ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
+        for (int i = 0; i < 30; i++) {
+            new Thread(() -> {
+                map.put(Thread.currentThread().getName(), UUID.randomUUID().toString().substring(0, 5));
+                System.out.println(map);
+            }, String.valueOf(i)).start();
+        }
+    }
+}
+```
+
+# Callable ( 简单 )
+
