@@ -978,3 +978,53 @@ public class MapTest {
 
 # Callable ( 简单 )
 
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200819161055864.png" alt="image-20200819161055864" style="zoom:50%;" />
+
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200819161114937.png" alt="image-20200819161114937" style="zoom:50%;" />
+
+```java
+package com.cxy.callable;
+
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
+
+/**
+ * @program: cxyJuc
+ * @description:
+ * @author: cuixy
+ * @create: 2020-08-19 16:11
+ **/
+public class CallableTest {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+//        new Thread(new Runnable()).start();
+//        new Thread(new FutureTask<V>()).start();;
+//        new Thread(new FutureTask<V>(Callable)).start();
+        new Thread().start(); //如何启动Callable
+
+        MyThread thread = new MyThread();
+        FutureTask futureTask = new FutureTask(thread); //适配类
+
+        new Thread(futureTask, "A").start();
+        new Thread(futureTask, "B").start();//结果会被缓存，效率高
+
+        Integer o = (Integer) futureTask.get();
+        System.out.println(o);
+    }
+}
+
+class MyThread implements Callable<Integer> {
+    @Override
+    public Integer call() throws Exception {
+        System.out.println("call()");
+        return 1024;
+    }
+}
+```
+
+细节：
+1、有缓存
+2、结果可能需要等待，会阻塞！
+
+# 常用的辅助类(必会)
+
