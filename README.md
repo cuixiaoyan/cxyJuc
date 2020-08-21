@@ -1028,3 +1028,40 @@ class MyThread implements Callable<Integer> {
 
 # 常用的辅助类(必会)
 
+CountDownLatch
+
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200821160604906.png" alt="image-20200821160604906" style="zoom:50%;" />
+
+```java
+package com.cxy.add;
+
+import java.util.concurrent.CountDownLatch;
+/**
+ * @program: cxyJuc
+ * @description:
+ * @author: cuixy
+ * @create: 2020-08-21 16:06
+ **/
+public class CountDownLatchDemo {
+    //计数器
+    public static void main(String[] args) throws InterruptedException {
+        //总数是6，必须要执行任务的时候，再使用。
+        CountDownLatch countDownLatch = new CountDownLatch(6);
+        for (int i = 1; i < 6; i++) {
+            new Thread(() -> {
+                System.out.println(Thread.currentThread().getName() + "Go out");
+                countDownLatch.countDown();
+            }, String.valueOf(i)).start();
+        }
+        countDownLatch.await(); //等待计数器归零，然后再向下执行。
+        System.out.println("Close Door");
+    }
+}
+```
+
+原理：
+countDownLatch.countDown(); // 数量-1
+
+countDownLatch.await(); // 等待计数器归零，然后再向下执行
+每次有线程调用 countDown() 数量-1，假设计数器变为0，countDownLatch.await() 就会被唤醒，继续
+执行！
