@@ -1028,7 +1028,7 @@ class MyThread implements Callable<Integer> {
 
 # 常用的辅助类(必会)
 
-CountDownLatch
+## CountDownLatch
 
 <img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200821160604906.png" alt="image-20200821160604906" style="zoom:50%;" />
 
@@ -1065,3 +1065,89 @@ countDownLatch.countDown(); // 数量-1
 countDownLatch.await(); // 等待计数器归零，然后再向下执行
 每次有线程调用 countDown() 数量-1，假设计数器变为0，countDownLatch.await() 就会被唤醒，继续
 执行！
+
+## CyclicBarrier
+
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200825160441198.png" alt="image-20200825160441198" style="zoom:50%;" />
+
+```java
+package com.cxy.add;
+
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
+
+/**
+ * @program: cxyJuc
+ * @description: 加法计数器
+ * @author: cuixy
+ * @create: 2020-08-25 16:06
+ **/
+public class CyclicBarrierDemo {
+    public static void main(String[] args) {
+        CyclicBarrier cyclicBarrier = new CyclicBarrier(7, () -> {
+            System.out.println("七剑合璧");
+        });
+        for (int i = 0; i < 7; i++) {
+            final int temp = i;
+            new Thread(()->{
+                System.out.println(Thread.currentThread().getName() + "集齐" + temp + "把剑");
+                try {
+                    cyclicBarrier.await();//等待
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (BrokenBarrierException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        }
+    }
+}
+```
+
+## Semaphore
+
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200825162014241.png" alt="image-20200825162014241" style="zoom:50%;" />
+
+```java
+package com.cxy.add;
+
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * @program: cxyJuc
+ * @description: 模拟抢车位。
+ * @author: cuixy
+ * @create: 2020-08-25 16:20
+ **/
+public class SemaphoreDemo {
+    public static void main(String[] args) {
+        //线程数量，限流。
+        Semaphore semaphore = new Semaphore(3);
+        for (int i = 0; i < 6; i++) {
+            new Thread(()->{
+                try {
+                    semaphore.acquire();//得到。
+                    System.out.println(Thread.currentThread().getName() + "抢到车位了");
+                    TimeUnit.SECONDS.sleep(2);
+                    System.out.println(Thread.currentThread().getName() + "离开车位了");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    semaphore.release(); //释放。
+                }
+            },String.valueOf(i)).start();
+        }
+    }
+
+}
+```
+
+原理：
+semaphore.acquire() 获得，假设如果已经满了，等待，等待被释放为止！
+
+semaphore.release(); 释放，会将当前的信号量释放 + 1，然后唤醒等待的线程！
+作用： 多个共享资源互斥的使用！并发限流，控制最大的线程数！
+
+# 读写锁
+
