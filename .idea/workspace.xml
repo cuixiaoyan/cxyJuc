@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd55efe7-2e48-44ce-ad5e-944fd0dbd001" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/cxy/add/CyclicBarrierDemo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/cxy/add/SemaphoreDemo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/cxy/rw/ReadWriteLockDemo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/cxy/add/CountDownLatchDemo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/cxy/add/CountDownLatchDemo.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -26,36 +24,36 @@
     <session id="-848483578">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="9" />
-          <entry key="project.open.time.1" value="6" />
-          <entry key="project.open.time.2" value="3" />
+          <entry key="project.closed" value="11" />
+          <entry key="project.open.time.1" value="7" />
+          <entry key="project.open.time.2" value="4" />
           <entry key="project.open.time.6" value="1" />
-          <entry key="project.opened" value="10" />
+          <entry key="project.opened" value="12" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="gradle" value="2" />
-          <entry key="java" value="33" />
+          <entry key="java" value="34" />
           <entry key="md" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Groovy" value="2" />
-          <entry key="JAVA" value="33" />
+          <entry key="JAVA" value="34" />
           <entry key="Markdown" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="3938" />
+          <entry key="java" value="4426" />
           <entry key="md" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="3938" />
+          <entry key="JAVA" value="4426" />
           <entry key="Markdown" value="2" />
         </counts>
       </usages-collector>
@@ -64,10 +62,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/cxy/add/SemaphoreDemo.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/cxy/rw/ReadWriteLockDemo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="254">
-              <caret line="19" column="45" selection-start-line="19" selection-start-column="45" selection-end-line="19" selection-end-column="45" />
+            <state relative-caret-position="143">
+              <caret line="28" column="12" lean-forward="true" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="12" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -439,6 +437,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/cxy/add/CyclicBarrier.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/cxy/add/CyclicBarrierDemo.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/cxy/add/SemaphoreDemo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/cxy/rw/ReadWriteLockDemo.java" />
       </list>
     </option>
   </component>
@@ -459,9 +458,8 @@
   <component name="MavenRunner">
     <option name="jreName" value="1.8" />
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="412" />
-    <option name="y" value="33" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="y" value="23" />
     <option name="width" value="1440" />
     <option name="height" value="832" />
   </component>
@@ -471,6 +469,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -504,28 +505,16 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="cxy" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="cxyJuc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cxyJuc" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="cxy" type="462c0819:PsiDirectoryNode" />
-              <item name="add" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1598344071134" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1598584248568" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -550,7 +539,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.SemaphoreDemo">
+  <component name="RunManager" selected="Application.ReadWriteLockDemo">
     <configuration name="CallableTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.cxy.callable.CallableTest" />
       <module name="cxyJuc_main" />
@@ -590,12 +579,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MapTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.cxy.unsafe.MapTest" />
+    <configuration name="ReadWriteLockDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.cxy.rw.ReadWriteLockDemo" />
       <module name="cxyJuc_main" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.cxy.unsafe.*" />
+          <option name="PATTERN" value="com.cxy.rw.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -617,19 +606,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.MapTest" />
       <item itemvalue="Application.CallableTest" />
       <item itemvalue="Application.CountDownLatchDemo" />
       <item itemvalue="Application.CyclicBarrierDemo" />
       <item itemvalue="Application.SemaphoreDemo" />
+      <item itemvalue="Application.ReadWriteLockDemo" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ReadWriteLockDemo" />
         <item itemvalue="Application.SemaphoreDemo" />
         <item itemvalue="Application.CyclicBarrierDemo" />
         <item itemvalue="Application.CountDownLatchDemo" />
         <item itemvalue="Application.CallableTest" />
-        <item itemvalue="Application.MapTest" />
       </list>
     </recent_temporary>
   </component>
@@ -652,18 +641,19 @@
       <workItem from="1597633646355" duration="5683000" />
       <workItem from="1597824582535" duration="1038000" />
       <workItem from="1597997011248" duration="3226000" />
-      <workItem from="1598342428323" duration="1457000" />
+      <workItem from="1598342428323" duration="1815000" />
+      <workItem from="1598410662073" duration="21000" />
+      <workItem from="1598579985567" duration="3208000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28350000" />
+    <option name="totallyTimeSpent" value="31937000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="412" y="33" width="1440" height="832" extended-state="0" />
-    <editor active="true" />
+    <frame x="462" y="27" width="1440" height="832" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18240343" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18669528" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="JRebel" order="2" side_tool="true" />
       <window_info id="Image Layers" order="3" />
@@ -673,14 +663,14 @@
       <window_info id="Designer" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32837838" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32837838" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Build" order="8" visible="true" weight="0.32972974" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.32297298" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.32205683" />
       <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="12" weight="0.32972974" />
@@ -892,16 +882,23 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="131">
           <caret line="14" column="29" lean-forward="true" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/cxy/add/SemaphoreDemo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="34" lean-forward="true" selection-start-line="18" selection-start-column="34" selection-end-line="18" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/cxy/add/SemaphoreDemo.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/cxy/rw/ReadWriteLockDemo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="254">
-          <caret line="19" column="45" selection-start-line="19" selection-start-column="45" selection-end-line="19" selection-end-column="45" />
+        <state relative-caret-position="143">
+          <caret line="28" column="12" lean-forward="true" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="12" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
