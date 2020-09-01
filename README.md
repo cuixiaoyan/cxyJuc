@@ -1381,3 +1381,133 @@ public class testQueue {
 没有容量，
 进去一个元素，必须等待取出来之后，才能再往里面放一个元素！
 put、take
+
+```java
+package com.cxy.queue;
+
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * @program: cxyJuc
+ * @description: 同步队列，和其他的BlockingQueue不一样，SynchronousQueue不存储元素。
+ * put一个元素，必须从里面先take取出来，否则不能在put进去值。
+ * @author: cuixy
+ * @create: 2020-09-01 10:35
+ **/
+public class SynchronousQueueDemo {
+    public static void main(String[] args) {
+        SynchronousQueue<String> blockingQueue = new SynchronousQueue<>();//同步队列
+
+        new Thread(() -> {
+            try {
+                System.out.println(Thread.currentThread().getName() + "put 1");
+                blockingQueue.put("1");
+                System.out.println(Thread.currentThread().getName() + "put 2");
+                blockingQueue.put("2");
+                System.out.println(Thread.currentThread().getName() + "put 3");
+                blockingQueue.put("3");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }, "T1").start();
+
+        new Thread(() -> {
+            try {
+                TimeUnit.SECONDS.sleep(3);
+                System.out.println(Thread.currentThread().getName() + "=>" + blockingQueue.take());
+                TimeUnit.SECONDS.sleep(3);
+                System.out.println(Thread.currentThread().getName() + "=>" + blockingQueue.take());
+                TimeUnit.SECONDS.sleep(3);
+                System.out.println(Thread.currentThread().getName() + "=>" + blockingQueue.take());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }, "T2").start();
+    }
+}
+```
+
+# 线程池
+
+线程池：三大方法、7大参数、4种拒绝策略
+
+> 池化技术
+
+程序的运行，本质：占用系统的资源！ 优化资源的使用！=>池化技术
+线程池、连接池、内存池、对象池///..... 创建、销毁。十分浪费资源
+池化技术：事先准备好一些资源，有人要用，就来我这里拿，用完之后还给我。
+线程池的好处:
+1、降低资源的消耗
+2、提高响应的速度
+3、方便管理。
+线程复用、可以控制最大并发数、管理线程。
+
+>线程池：三大方法
+
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200901105827836.png" alt="image-20200901105827836" style="zoom:50%;" />
+
+```java
+package com.cxy.pool;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+/**
+ * @program: cxyJuc
+ * @description: Executors 工具类，3大方法。
+ * @author: cuixy
+ * @create: 2020-09-01 11:05
+ **/
+public class Demo01 {
+    public static void main(String[] args) {
+        //单个线程
+//        ExecutorService threadPool = Executors.newSingleThreadExecutor();
+
+        //创建一个固定的线程池的大小
+//        ExecutorService threadPool = Executors.newFixedThreadPool(5);
+
+
+        //可伸缩的
+        ExecutorService threadPool = Executors.newCachedThreadPool();
+
+        try {
+            for (int i = 0; i < 100; i++) {
+                //使用线程池之后，使用线程池来创建线程。
+                threadPool.execute(() -> {
+                    System.out.println(Thread.currentThread().getName() + "ok");
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            //线程池用完，程序结束，关闭线程池。
+            threadPool.shutdown();
+        }
+
+
+    }
+
+}
+```
+
+> 七大参数
+
+源码分析
+
+```java
+ public ThreadPoolExecutor(int corePoolSize,// 核心线程池大小
+                              int maximumPoolSize,// 最大核心线程池大小
+                              long keepAliveTime,// 超时了没有人调用就会释放
+                              TimeUnit unit,// 超时单位
+                              BlockingQueue<Runnable> workQueue// 阻塞队列) {
+        this(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue,
+             Executors.defaultThreadFactory(), defaultHandler // 拒绝策略);
+    }
+```
+
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200901113440475.png" alt="image-20200901113440475" style="zoom:50%;" />
+
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200901113459121.png" alt="image-20200901113459121" style="zoom:50%;" />
+
