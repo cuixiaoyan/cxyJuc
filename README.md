@@ -1589,29 +1589,11 @@ public interface Runnable {}
 <img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200907112353934.png" alt="image-20200907112353934" style="zoom:50%;" />
 
 ```java
-package com.cxy.function;
-
-/**
- * @program: cxyJuc
- * @description:
- * @author: cuixy
- * @create: 2020-09-07 11:25
- **/
-
-import java.util.function.Function;
-
-/**
- * Function 函数型接口, 有一个输入参数，有一个输出
- * 只要是 函数型接口 可以 用 lambda表达式简化
- */
-public class Demo01 {
-    public static void main(String[] args) {
+//函数型接口, 有一个输入参数，有一个输出
         Function<String, String> function = (str) -> {
             return str;
         };
         System.out.println(function.apply("cxy"));
-    }
-}
 ```
 
 >断定型接口：有一个输入参数，返回值只能是 布尔值！
@@ -1619,9 +1601,215 @@ public class Demo01 {
 <img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200907114007013.png" alt="image-20200907114007013" style="zoom:50%;" />
 
 ```java
-Predicate<String> predicate = (str) -> {
+ //断定型接口：有一个输入参数，返回值只能是 布尔值！
+        Predicate<String> predicate = (str) -> {
             return str.isEmpty();
         };
         System.out.println(predicate.test(""));
 ```
+
+>Consumer 消费型接口
+
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200907144144439.png" alt="image-20200907144144439" style="zoom:50%;" />
+
+```java
+//Consumer 消费型接只有输入，没有返回值
+        Consumer<String> consumer = (str) ->{
+            System.out.println(str);
+        };
+        consumer.accept("consumer");
+```
+
+>Supplier 供给型接口
+
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200907151818542.png" alt="image-20200907151818542" style="zoom:50%;" />
+
+```java
+//Supplier 供给型接口 没有参数，只有返回值
+        Supplier supplier = ()->{return 1024;};
+        System.out.println(supplier.get());
+```
+
+# Stream流式计算
+
+>什么是Stream流式计算
+
+大数据：存储 + 计算
+集合、MySQL 本质就是存储东西的；
+计算都应该交给流来操作！
+
+```java
+package com.cxy.stream;
+
+/**
+ * @program: cxyJuc
+ * @description:
+ * @author: cuixy
+ * @create: 2020-09-07 15:45
+ **/
+import java.util.Arrays;
+import java.util.List;
+/**
+ * 题目要求：
+ * 一分钟内完成此题，只能用一行代码实现！
+ * 现在有5个用户！筛选：
+ * 1、ID 必须是偶数
+ * 2、年龄必须大于23岁
+ * 3、用户名转为大写字母
+ * 4、用户名字母倒着排序
+ * 5、只输出一个用户！
+ */
+public class Test {
+    public static void main(String[] args) {
+        cxyUser u1 = new cxyUser(1, "a", 21);
+        cxyUser u2 = new cxyUser(2, "b", 22);
+        cxyUser u3 = new cxyUser(3, "c", 23);
+        cxyUser u4 = new cxyUser(4, "d", 24);
+        cxyUser u5 = new cxyUser(5, "e", 25);
+
+        //集合存储
+        List<cxyUser> list = Arrays.asList(u1, u2, u3, u4, u5);
+        //计算交给Stream流
+        //lambda表达式，链式编程，函数式接口，Stream流计算
+        list.stream()
+//                .filter(u -> { return u.getId() % 2 == 0; })
+                .filter(u->{return u.getAge() > 23;})
+                .map(u->{return u.getName().toUpperCase();})
+                .sorted((uu1,uu2)->{return uu2.compareTo(uu1);})
+//                .limit(1)
+                .forEach(System.out::println);
+    }
+}
+```
+
+# ForkJoin
+
+ForkJoin 在 JDK 1.7 ， 并行执行任务！提高效率。大数据量！
+大数据：Map Reduce （把大任务拆分为小任务）
+
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200909141142281.png" alt="image-20200909141142281" style="zoom:50%;" />
+
+>ForkJoin 特点：工作窃取
+
+这个里面维护的都是双端队列
+
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200909143828622.png" alt="image-20200909143828622" style="zoom:50%;" />
+
+>ForkJoin
+
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200909144531524.png" alt="image-20200909144531524" style="zoom:50%;" />
+
+```java
+package com.cxy.forkjoin;
+
+/**
+ * @program: cxyJuc
+ * @description:
+ * @author: cuixy
+ * @create: 2020-09-09 14:48
+ **/
+
+import java.util.concurrent.RecursiveTask;
+
+/**
+ * 求和计算的任务！
+ * 3000
+ * 6000（ForkJoin） 9000（Stream并行流）
+ * // 如何使用 forkjoin
+ * // 1、forkjoinPool 通过它来执行
+ * // 2、计算任务 forkjoinPool.execute(ForkJoinTask task)
+ * // 3. 计算类要继承 ForkJoinTask
+ */
+public class ForkJoinDemo extends RecursiveTask<Long> {
+
+    private Long start; //1
+    private Long end; //1990900000
+
+    //临界值
+    private Long temp = 10000L;
+
+    public ForkJoinDemo(Long start, Long end) {
+        this.start = start;
+        this.end = end;
+    }
+
+
+    //计算方法
+    @Override
+    protected Long compute() {
+        if ((end - start) < temp) {
+            Long sum = 0L;
+            for (Long i = start; i <= end; i++) {
+                sum += i;
+            }
+            return sum;
+        } else { // forkjoin 递归
+            long middle = (start + end) / 2;
+            ForkJoinDemo task1 = new ForkJoinDemo(start, middle);
+            task1.fork();//拆分任务，把任务压入线程队列。
+            ForkJoinDemo task2 = new ForkJoinDemo(middle + 1, end);
+            task2.fork();
+            return task1.join() + task2.join();
+        }
+    }
+}
+```
+
+## 测试类
+
+```java
+package com.cxy.forkjoin;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ForkJoinTask;
+import java.util.stream.LongStream;
+
+/**
+ * @program: cxyJuc
+ * @description: 同一个任务，效率高几十倍。一亿条记录。
+ * @author: cuixy
+ * @create: 2020-09-09 15:56
+ **/
+public class Test {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+//        test1(); 6088
+//        test2(); 610
+//        test3(); 113
+
+    }
+
+    //普通程序
+    public static void test1() {
+        Long sum = 0L;
+        Long start = System.currentTimeMillis();
+        for (Long i = 1L; i < 100000000L; i++) {
+            sum += i;
+        }
+        Long end = System.currentTimeMillis();
+        System.out.println("sum=" + sum + "时间:" + (end - start));
+    }
+
+    //会使用ForkJoin
+    public static void test2() throws ExecutionException, InterruptedException {
+        Long start = System.currentTimeMillis();
+        ForkJoinPool forkJoinPool = new ForkJoinPool();
+        ForkJoinDemo task = new ForkJoinDemo(0L, 100000000L);
+        ForkJoinTask<Long> submit = forkJoinPool.submit(task);//提交任务
+        Long sum = submit.get();
+        Long end = System.currentTimeMillis();
+        System.out.println("sum=" + sum + "时间:" + (end - start));
+    }
+
+    //Stream并行流
+    public static void test3(){
+        Long start = System.currentTimeMillis();
+        long sum = LongStream.rangeClosed(0L, 100000000L).parallel().reduce(0, Long::sum);
+        Long end = System.currentTimeMillis();
+        System.out.println("sum=" + sum + "时间:" + (end - start));
+    }
+}
+```
+
+# 异步回调
 
