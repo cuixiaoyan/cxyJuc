@@ -2,16 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd55efe7-2e48-44ce-ad5e-944fd0dbd001" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/cxy/forkjoin/ForkJoinDemo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/cxy/forkjoin/Test.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/cxy/stream/Test.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/cxy/stream/cxyUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/cxy/future/Demo01.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/cxy/function/Demo01.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/cxy/function/Demo01.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cxy/function/Demo01.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cxy/function/Demo01.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -48,40 +41,40 @@
     <session id="-848483578">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="18" />
+          <entry key="project.closed" value="19" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.1" value="9" />
-          <entry key="project.open.time.2" value="6" />
+          <entry key="project.open.time.2" value="7" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.6" value="2" />
-          <entry key="project.opened" value="19" />
+          <entry key="project.opened" value="20" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="gradle" value="3" />
-          <entry key="java" value="55" />
+          <entry key="java" value="57" />
           <entry key="md" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Groovy" value="3" />
-          <entry key="JAVA" value="55" />
+          <entry key="JAVA" value="57" />
           <entry key="Markdown" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="gradle" value="13" />
-          <entry key="java" value="6985" />
+          <entry key="java" value="7347" />
           <entry key="md" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Groovy" value="13" />
-          <entry key="JAVA" value="6985" />
+          <entry key="JAVA" value="7347" />
           <entry key="Markdown" value="2" />
         </counts>
       </usages-collector>
@@ -89,20 +82,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/cxy/forkjoin/ForkJoinDemo.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="128">
-              <caret line="19" column="3" lean-forward="true" selection-end-line="52" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/cxy/forkjoin/Test.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/cxy/future/Demo01.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="364">
-              <caret line="50" selection-start-line="50" selection-end-line="50" />
+            <state relative-caret-position="378">
+              <caret line="33" column="11" lean-forward="true" selection-start-line="33" selection-start-column="11" selection-end-line="33" selection-end-column="11" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -487,6 +471,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/cxy/stream/Test.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/cxy/forkjoin/ForkJoinDemo.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/cxy/forkjoin/Test.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/cxy/future/Demo01.java" />
       </list>
     </option>
   </component>
@@ -518,8 +503,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
       <pane id="PackagesPane" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -553,28 +538,6 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="cxy" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="cxyJuc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cxyJuc" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="cxy" type="462c0819:PsiDirectoryNode" />
-              <item name="forkjoin" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cxyJuc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cxyJuc" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="cxy" type="462c0819:PsiDirectoryNode" />
-              <item name="stream" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cxyJuc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -586,7 +549,7 @@
     <property name="SearchEverywhereHistoryKey" value="Supplier&#9;PSI&#9;JAVA://java.util.function.Supplier&#10;Consumer&#9;PSI&#9;JAVA://java.util.function.Consumer&#10;predicate&#9;PSI&#9;JAVA://java.util.function.Predicate&#10;Function&#9;PSI&#9;JAVA://java.util.function.Function&#10;Runnable&#9;PSI&#9;JAVA://java.lang.Runnable" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1599641133841" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1599729336674" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -611,7 +574,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Test (1)">
+  <component name="RunManager" selected="Application.Demo01 (2)">
     <configuration name="Demo01 (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.cxy.function.Demo01" />
       <module name="cxyJuc_main" />
@@ -625,12 +588,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Demo01" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.cxy.pool.Demo01" />
+    <configuration name="Demo01 (2)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.cxy.future.Demo01" />
       <module name="cxyJuc_main" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.cxy.pool.*" />
+          <option name="PATTERN" value="com.cxy.future.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -678,19 +641,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Demo01" />
       <item itemvalue="Application.Demo02" />
       <item itemvalue="Application.Demo01 (1)" />
       <item itemvalue="Application.Test" />
       <item itemvalue="Application.Test (1)" />
+      <item itemvalue="Application.Demo01 (2)" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Demo01 (2)" />
         <item itemvalue="Application.Test (1)" />
         <item itemvalue="Application.Test" />
         <item itemvalue="Application.Demo01 (1)" />
         <item itemvalue="Application.Demo02" />
-        <item itemvalue="Application.Demo01" />
       </list>
     </recent_temporary>
   </component>
@@ -722,18 +685,19 @@
       <workItem from="1599445110784" duration="5065000" />
       <workItem from="1599460756486" duration="4150000" />
       <workItem from="1599465754547" duration="2138000" />
-      <workItem from="1599631457170" duration="6854000" />
+      <workItem from="1599631457170" duration="7034000" />
+      <workItem from="1599717730387" duration="5219000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="58552000" />
+    <option name="totallyTimeSpent" value="63951000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="408" y="25" width="1440" height="832" extended-state="0" />
+    <frame x="0" y="23" width="1440" height="832" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20529328" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2081545" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="JRebel" order="2" side_tool="true" />
       <window_info id="Image Layers" order="3" />
@@ -743,14 +707,14 @@
       <window_info id="Designer" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32297298" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32297298" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Build" order="8" weight="0.32702702" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.3166441" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.31529093" />
       <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="12" weight="0.32972974" />
@@ -1102,15 +1066,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/cxy/forkjoin/ForkJoinDemo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="19" column="3" lean-forward="true" selection-end-line="52" selection-end-column="1" />
+        <state relative-caret-position="150">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/cxy/forkjoin/Test.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="50" selection-start-line="50" selection-end-line="50" />
+        <state relative-caret-position="525">
+          <caret line="38" column="32" selection-start-line="38" selection-start-column="32" selection-end-line="38" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/cxy/future/Demo01.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="33" column="11" lean-forward="true" selection-start-line="33" selection-start-column="11" selection-end-line="33" selection-end-column="11" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
