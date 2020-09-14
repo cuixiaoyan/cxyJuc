@@ -2,11 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd55efe7-2e48-44ce-ad5e-944fd0dbd001" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/cxy/tvolatile/JmmDemo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/cxy/tvolatile/VDemo02.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/cxy/single/Holder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/cxy/single/Hungry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/cxy/single/LazyMan.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/cxy/future/Demo01.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/cxy/future/Demo01.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/cxy/tvolatile/VDemo02.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/cxy/tvolatile/VDemo02.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -43,40 +44,41 @@
     <session id="-848483578">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="20" />
+          <entry key="project.closed" value="21" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.1" value="9" />
           <entry key="project.open.time.2" value="8" />
           <entry key="project.open.time.3" value="1" />
+          <entry key="project.open.time.4" value="1" />
           <entry key="project.open.time.6" value="2" />
-          <entry key="project.opened" value="21" />
+          <entry key="project.opened" value="22" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="gradle" value="3" />
-          <entry key="java" value="59" />
+          <entry key="java" value="62" />
           <entry key="md" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Groovy" value="3" />
-          <entry key="JAVA" value="59" />
+          <entry key="JAVA" value="62" />
           <entry key="Markdown" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="gradle" value="13" />
-          <entry key="java" value="7657" />
+          <entry key="java" value="8213" />
           <entry key="md" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Groovy" value="13" />
-          <entry key="JAVA" value="7657" />
+          <entry key="JAVA" value="8213" />
           <entry key="Markdown" value="2" />
         </counts>
       </usages-collector>
@@ -85,13 +87,13 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/cxy/tvolatile/VDemo02.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/cxy/single/Holder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="364">
-              <caret line="30" selection-start-line="30" selection-end-line="30" />
+            <state relative-caret-position="300">
+              <caret line="20" column="58" selection-start-line="20" selection-start-column="58" selection-end-line="20" selection-end-column="58" />
               <folding>
-                <element signature="e#257#258#0" expanded="true" />
-                <element signature="e#278#279#0" expanded="true" />
+                <element signature="e#280#281#0" expanded="true" />
+                <element signature="e#320#321#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -477,6 +479,9 @@
         <option value="$PROJECT_DIR$/src/main/java/com/cxy/future/Demo01.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/cxy/tvolatile/JmmDemo.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/cxy/tvolatile/VDemo02.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/cxy/single/Hungry.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/cxy/single/LazyMan.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/cxy/single/Holder.java" />
       </list>
     </option>
   </component>
@@ -498,7 +503,7 @@
     <option name="jreName" value="1.8" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="484" />
+    <option name="x" value="461" />
     <option name="y" value="23" />
     <option name="width" value="1440" />
     <option name="height" value="832" />
@@ -509,6 +514,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -549,22 +556,29 @@
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="cxy" type="462c0819:PsiDirectoryNode" />
+              <item name="single" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cxyJuc" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cxyJuc" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="cxy" type="462c0819:PsiDirectoryNode" />
               <item name="tvolatile" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
-      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="Supplier&#9;PSI&#9;JAVA://java.util.function.Supplier&#10;Consumer&#9;PSI&#9;JAVA://java.util.function.Consumer&#10;predicate&#9;PSI&#9;JAVA://java.util.function.Predicate&#10;Function&#9;PSI&#9;JAVA://java.util.function.Function&#10;Runnable&#9;PSI&#9;JAVA://java.lang.Runnable" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1599807744210" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1600054027796" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -589,7 +603,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.VDemo02">
+  <component name="RunManager" selected="Application.LazyMan">
     <configuration name="Demo01 (2)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.cxy.future.Demo01" />
       <module name="cxyJuc_main" />
@@ -616,12 +630,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.cxy.forkjoin.Test" />
+    <configuration name="LazyMan" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.cxy.single.LazyMan" />
       <module name="cxyJuc_main" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.cxy.forkjoin.*" />
+          <option name="PATTERN" value="com.cxy.single.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -629,12 +643,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.cxy.stream.Test" />
+    <configuration name="Test (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.cxy.forkjoin.Test" />
       <module name="cxyJuc_main" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.cxy.stream.*" />
+          <option name="PATTERN" value="com.cxy.forkjoin.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -656,19 +670,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Test" />
       <item itemvalue="Application.Test (1)" />
       <item itemvalue="Application.Demo01 (2)" />
       <item itemvalue="Application.JmmDemo" />
       <item itemvalue="Application.VDemo02" />
+      <item itemvalue="Application.LazyMan" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.LazyMan" />
         <item itemvalue="Application.VDemo02" />
         <item itemvalue="Application.JmmDemo" />
         <item itemvalue="Application.Demo01 (2)" />
         <item itemvalue="Application.Test (1)" />
-        <item itemvalue="Application.Test" />
       </list>
     </recent_temporary>
   </component>
@@ -702,18 +716,19 @@
       <workItem from="1599465754547" duration="2138000" />
       <workItem from="1599631457170" duration="7034000" />
       <workItem from="1599717730387" duration="5354000" />
-      <workItem from="1599802767572" duration="4653000" />
+      <workItem from="1599802767572" duration="4735000" />
+      <workItem from="1600047544354" duration="6215000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="68739000" />
+    <option name="totallyTimeSpent" value="75036000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="484" y="23" width="1440" height="832" extended-state="0" />
+    <frame x="461" y="23" width="1440" height="832" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21101573" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21387696" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="JRebel" order="2" side_tool="true" />
       <window_info id="Image Layers" order="3" />
@@ -723,20 +738,20 @@
       <window_info id="Designer" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32297298" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32162163" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Build" order="8" weight="0.32702702" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.31351352" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.31258458" />
       <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="12" weight="0.32972974" />
       <window_info anchor="bottom" id="JRebel Console" order="13" side_tool="true" />
       <window_info anchor="bottom" id="JRebel Executor" order="14" />
-      <window_info anchor="bottom" id="Messages" order="15" weight="0.32837838" />
+      <window_info anchor="bottom" id="Messages" order="15" weight="0.32746956" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -756,20 +771,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/settings.gradle">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor>
-            <caret column="8" lean-forward="true" selection-start-column="8" selection-end-column="8" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/testThread.java" />
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/src.zip!/java/lang/Thread.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="108">
@@ -1104,11 +1105,43 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/cxy/tvolatile/VDemo02.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="30" selection-start-line="30" selection-end-line="30" />
+        <state relative-caret-position="154">
+          <caret line="16" column="34" lean-forward="true" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
           <folding>
-            <element signature="e#257#258#0" expanded="true" />
-            <element signature="e#278#279#0" expanded="true" />
+            <element signature="e#256#257#0" expanded="true" />
+            <element signature="e#277#278#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/cxy/single/Hungry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="25" lean-forward="true" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
+          <folding>
+            <element signature="e#472#473#0" expanded="true" />
+            <element signature="e#501#502#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/cxy/single/LazyMan.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="32" column="46" lean-forward="true" selection-start-line="32" selection-start-column="46" selection-end-line="32" selection-end-column="46" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/cxy/single/Holder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="58" selection-start-line="20" selection-start-column="58" selection-end-line="20" selection-end-column="58" />
+          <folding>
+            <element signature="e#280#281#0" expanded="true" />
+            <element signature="e#320#321#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -1998,3 +1998,174 @@ public class VDemo02 {
 
 <img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200911150036549.png" alt="image-20200911150036549" style="zoom:50%;" />
 
+这些类的底层都直接和操作系统挂钩！在内存中修改值！Unsafe类是一个很特殊的存在！
+
+> 指令重排
+
+什么是 指令重排：你写的程序，计算机并不是按照你写的那样去执行的。
+源代码-->编译器优化的重排--> 指令并行也可能会重排--> 内存系统也会重排---> 执行
+处理器在进行指令重排的时候，考虑：数据之间的依赖性！
+
+int x = 1; // 1
+int y = 2; // 2
+x = x + 5; // 3
+y = x * x; // 4
+
+我们所期望的：1234 但是可能执行的时候回变成 2134 1324
+可不可能是 4123！
+
+可能造成影响的结果： a b x y 这四个值默认都是 0；
+
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200914095349648.png" alt="image-20200914095349648" style="zoom:50%;" />
+
+正常的结果： x = 0；y = 0；但是可能由于指令重排
+
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200914095407351.png" alt="image-20200914095407351" style="zoom:50%;" />
+
+volatile可以避免指令重排：
+内存屏障。CPU指令。作用：
+1、保证特定的操作的执行顺序！
+2、可以保证某些变量的内存可见性 （利用这些特性volatile实现了可见性）
+
+<img src="/Users/cuixiaoyan/Library/Application%20Support/typora-user-images/image-20200914095457456.png" alt="image-20200914095457456" style="zoom:50%;" />
+
+Volatile 是可以保持 可见性。不能保证原子性，由于内存屏障，可以保证避免指令重排的现象产生！
+
+# 单例模式
+
+饿汉式 DCL懒汉式，深究！
+
+## 饿汉式
+
+```java
+package com.cxy.single;
+
+/**
+ * @program: cxyJuc
+ * @description: 饿汉式
+ * @author: cuixy
+ * @create: 2020-09-14 10:03
+ **/
+public class Hungry {
+    //可能会浪费空间
+    private byte[] data1 = new byte[1024 * 1024];
+    private byte[] data2 = new byte[1024 * 1024];
+    private byte[] data3 = new byte[1024 * 1024];
+    private byte[] data4 = new byte[1024 * 1024];
+
+    private Hungry() {
+    }
+
+    private final static Hungry HUNGRY = new Hungry();
+
+    public static Hungry getInstance() {
+        return HUNGRY;
+    }
+}
+```
+
+## DCL 懒汉式
+
+```java
+package com.cxy.single;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+
+/**
+ * @program: cxyJuc
+ * @description: 懒汉式单例
+ * @author: cuixy
+ * @create: 2020-09-14 10:25
+ **/
+public class LazyMan {
+    //标志位
+    private static boolean cxy = false;
+
+    private LazyMan() {
+        synchronized (LazyMan.class) {
+            if (cxy == false) {
+                cxy = true;
+            } else {
+                throw new RuntimeException("不要试图使用反射破坏异常");
+            }
+        }
+    }
+
+    private volatile static LazyMan lazyMan;
+
+    //双重检测锁模式的，懒汉式单例，DCL懒汉式
+    public static LazyMan getInstance() {
+        if (lazyMan == null) {
+            synchronized (LazyMan.class) {
+                if (lazyMan == null) {
+                    lazyMan = new LazyMan();//不是一个原子性操作
+                }
+            }
+        }
+        return lazyMan;
+    }
+
+    //反射
+    public static void main(String[] args) throws Exception {
+        Field cxy = LazyMan.class.getDeclaredField("cxy");
+        cxy.setAccessible(true);
+
+        Constructor<LazyMan> declaredConstructor = LazyMan.class.getDeclaredConstructor(null);
+        declaredConstructor.setAccessible(true);
+        LazyMan instance = declaredConstructor.newInstance();
+
+        cxy.set(instance, false);
+
+        LazyMan instance1 = declaredConstructor.newInstance();
+
+        System.out.println(instance);
+        System.out.println(instance1);
+
+
+    }
+
+    /**
+     * 1. 分配内存空间
+     * 2、执行构造方法，初始化对象
+     * 3、把这个对象指向这个空间
+     *
+     * 123
+     * 132 A
+     *
+     B // 此时lazyMan还没有完成构造
+     */
+
+}
+```
+
+## 静态内部类
+
+```java
+package com.cxy.single;
+
+import com.sun.org.apache.bcel.internal.classfile.InnerClass;
+
+/**
+ * @program: cxyJuc
+ * @description: 静态内部类。
+ * @author: cuixy
+ * @create: 2020-09-14 11:18
+ **/
+public class Holder {
+    private Holder() {
+
+    }
+
+    public static Holder getInstance() {
+        return InnerClass.HOLDER;
+    }
+
+    public static class InnerClass {
+        private static final Holder HOLDER = new Holder();
+    }
+
+
+}
+```
+
