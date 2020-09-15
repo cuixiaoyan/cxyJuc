@@ -2169,3 +2169,118 @@ public class Holder {
 }
 ```
 
+## 单例不安全，反射
+
+>枚举
+
+```java
+package com.cxy.single;
+
+import java.lang.reflect.Constructor;
+
+/**
+ * @program: cxyJuc
+ * @description: 枚举
+ * @author: cuixy
+ * @create: 2020-09-15 10:19
+ **/
+public enum EnumSingle {
+    INSTANCE;
+    public EnumSingle getInstance() {
+        return INSTANCE;
+    }
+}
+
+class Test {
+    public static void main(String[] args) throws Exception {
+        EnumSingle instance1 = EnumSingle.INSTANCE;
+        Constructor<EnumSingle> declaredConstructor =
+                EnumSingle.class.getDeclaredConstructor(String.class, int.class);
+        declaredConstructor.setAccessible(true);
+        EnumSingle instance2 = declaredConstructor.newInstance();
+        // NoSuchMethodException: com.cxy.single.Test.main(EnumSingle.java:28)
+        System.out.println(instance1);
+        System.out.println(instance2);
+    }
+}
+```
+
+# 深入理解CAS
+
+```
+package com.cxy.cas;
+
+import java.util.concurrent.atomic.AtomicInteger;
+
+/**
+ * @program: cxyJuc
+ * @description:
+ * @author: cuixy
+ * @create: 2020-09-15 10:31
+ **/
+public class CASDemo {
+    //CAS compareAndSet 比较并交换。
+    public static void main(String[] args) {
+        AtomicInteger atomicInteger = new AtomicInteger(2020);
+        //达到期望，就更新。
+        System.out.println(atomicInteger.compareAndSet(2020, 2021));
+        System.out.println(atomicInteger.get());
+
+        atomicInteger.getAndIncrement();
+        System.out.println(atomicInteger.compareAndSet(2020, 2021));
+        System.out.println(atomicInteger.get());
+
+    }
+
+}
+```
+
+>Unsafe 类
+
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200915110109661.png" alt="image-20200915110109661" style="zoom:50%;" />
+
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200915110128800.png" alt="image-20200915110128800" style="zoom:50%;" />
+
+CAS ： 比较当前工作内存中的值和主内存中的值，如果这个值是期望的，那么则执行操作！如果不是就
+一直循环！
+缺点：
+1、 循环会耗时
+2、一次性只能保证一个共享变量的原子性
+3、ABA问题
+
+>CAS ： ABA 问题（狸猫换太子）
+
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200915110451599.png" alt="image-20200915110451599" style="zoom:50%;" />
+
+```java
+package com.cxy.cas;
+
+import java.util.concurrent.atomic.AtomicInteger;
+
+/**
+ * @program: cxyJuc
+ * @description:
+ * @author: cuixy
+ * @create: 2020-09-15 10:31
+ **/
+public class CASDemo {
+    //CAS compareAndSet 比较并交换。
+    public static void main(String[] args) {
+        AtomicInteger atomicInteger = new AtomicInteger(2020);
+        //达到期望，就更新。
+        System.out.println(atomicInteger.compareAndSet(2020, 2021));
+        System.out.println(atomicInteger.get());
+
+        System.out.println(atomicInteger.compareAndSet(2021, 2020));
+        System.out.println(atomicInteger.get());
+
+        System.out.println(atomicInteger.compareAndSet(2020, 6666));
+        System.out.println(atomicInteger.get());
+
+    }
+
+}
+```
+
+# 原子引用
+
