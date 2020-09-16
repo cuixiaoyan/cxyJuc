@@ -2284,3 +2284,433 @@ public class CASDemo {
 
 # 原子引用
 
+>解决ABA 问题，引入原子引用！ 对应的思想：乐观锁！
+
+```java
+package com.cxy.cas;
+
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicStampedReference;
+
+/**
+ * @program: cxyJuc
+ * @description: 带版本号的，原子操作。
+ * @author: cuixy
+ * @create: 2020-09-15 10:31
+ **/
+public class CASDemo {
+    //AtomicsStampedRederence 如果泛型是一个包装类，注意对象的饮用规则。
+    static AtomicStampedReference<Integer> atomicStampedReference = new AtomicStampedReference<>(1, 1);
+
+    //CAS compareAndSet 比较并交换。
+    public static void main(String[] args) {
+        new Thread(() -> {
+            int stamp = atomicStampedReference.getStamp();//获得版本号
+            System.out.println("a1=>" + stamp);
+
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            atomicStampedReference.compareAndSet(1, 2,
+                    atomicStampedReference.getStamp(),
+                    atomicStampedReference.getStamp() + 1);
+
+            System.out.println("a2=>" + atomicStampedReference.getStamp());
+
+            atomicStampedReference.compareAndSet(2, 1,
+                    atomicStampedReference.getStamp(),
+                    atomicStampedReference.getStamp() + 1);
+
+            System.out.println("a3=>" + atomicStampedReference.getStamp());
+
+        }, "a").start();
+
+        //乐观锁原理相同。
+        new Thread(() -> {
+            int stamp = atomicStampedReference.getStamp();
+            System.out.println("b1=>" + stamp);
+
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            atomicStampedReference.compareAndSet(1, 6,
+                    stamp, stamp + 1);
+            System.out.println("b2=>" + atomicStampedReference.getStamp());
+
+        }, "b").start();
+
+
+    }
+
+}
+```
+
+注意：
+Integer 使用了对象缓存机制，默认范围是 -128 ~ 127 ，推荐使用静态工厂方法 valueOf 获取对象实
+例，而不是 new，因为 valueOf 使用缓存，而 new 一定会创建新的对象分配新的内存空间；
+
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200916144915739.png" alt="image-20200916144915739" style="zoom:50%;" />
+
+# 锁的理解
+
+## 公平锁、非公平锁
+
+公平锁： 非常公平， 不能够插队，必须先来后到！
+非公平锁：非常不公平，可以插队 （默认都是非公平）
+
+```java
+/**
+ * Creates an instance of {@code ReentrantLock}.
+ * This is equivalent to using {@code ReentrantLock(false)}.
+ */
+public ReentrantLock() {
+    sync = new NonfairSync();
+}
+
+/**
+ * Creates an instance of {@code ReentrantLock} with the
+ * given fairness policy.
+ *
+ * @param fair {@code true} if this lock should use a fair ordering policy
+ */
+public ReentrantLock(boolean fair) {
+    sync = fair ? new FairSync() : new NonfairSync();
+}
+```
+
+## 可重入锁
+
+可重入锁（递归锁）
+
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200916145548349.png" alt="image-20200916145548349" style="zoom:50%;" />
+
+>Synchronized
+
+```java
+package com.cxy.lock8;
+/**
+ * @program: cxyJuc
+ * @description: 8锁问题。
+ * @author: cuixy
+ * @create: 2020-08-15 10:12
+ **/
+import java.util.concurrent.TimeUnit;
+/**
+ * 8锁，就是关于锁的8个问题
+ * 1、标准情况下，两个线程先打印 发短信还是 打电话？ 1/发短信 2/打电话
+ * 1、sendSms延迟4秒，两个线程先打印 发短信还是 打电话？ 1/发短信 2/打电话
+ */
+public class Test1 {
+    public static void main(String[] args) {
+        Phone phone = new Phone();
+        new Thread(() -> {
+            phone.sendSms();
+        }, "A").start();
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        new Thread(() -> {
+            phone.call();
+        }, "B").start();
+    }
+}
+
+class Phone {
+    // synchronized 锁的对象是方法的调用者！、
+    // 两个方法用的是同一个锁，谁先拿到谁执行！
+    public synchronized void sendSms() {
+        try {
+            TimeUnit.SECONDS.sleep(4);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("发短信");
+
+    }
+    public synchronized void call() {
+        System.out.println("打电话");
+    }
+}
+```
+
+>Lock 版
+
+```java
+package com.cxy.pc;
+
+
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+/**
+ * @program: cxyJuc
+ * @description: juc版的生产者和消费者。
+ * @author: cuixy
+ * @create: 2020-08-12 16:07
+ **/
+public class B {
+    public static void main(String[] args) {
+
+        MyData2 myData2 = new MyData2();
+
+        new Thread(() -> {
+            for (int i = 0; i < 10; i++) {
+                try {
+                    myData2.increment();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, "A").start();
+
+        new Thread(() -> {
+            for (int i = 0; i < 10; i++) {
+                try {
+                    myData2.decrement();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, "B").start();
+
+
+        new Thread(() -> {
+            for (int i = 0; i < 10; i++) {
+                try {
+                    myData2.increment();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, "C").start();
+
+        new Thread(() -> {
+            for (int i = 0; i < 10; i++) {
+                try {
+                    myData2.decrement();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, "D").start();
+
+
+    }
+
+}
+
+//判断等待，业务，通知。
+class MyData2 {
+    private int number = 0;
+
+    Lock lock = new ReentrantLock();
+    Condition condition = lock.newCondition();
+    //condtion.await(); 等待
+    //condition.signalAll(); 唤醒全部
+
+    //+1
+    public void increment() throws InterruptedException {
+        lock.lock();
+        try {
+            while (number != 0) {
+                condition.await();
+            }
+            number++;
+            System.out.println(Thread.currentThread().getName() + "=>" + number);
+            condition.signalAll();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    //-1
+    public void decrement() throws InterruptedException {
+        lock.lock();
+        try {
+            while (number == 0) {
+                condition.await();
+            }
+            number--;
+            System.out.println(Thread.currentThread().getName() + "=>" + number);
+            condition.signalAll();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+
+}
+```
+
+## 自旋锁
+
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200916150108439.png" alt="image-20200916150108439" style="zoom:50%;" />
+
+```java
+package com.cxy.lock;
+
+import java.util.concurrent.atomic.AtomicReference;
+
+/**
+ * @program: cxyJuc
+ * @description: 自旋锁
+ * @author: cuixy
+ * @create: 2020-09-16 15:01
+ **/
+public class SpinlockDemo {
+    // int 0
+    // Thread null
+    AtomicReference<Thread> atomicReference = new AtomicReference<>();
+
+    //加锁
+    public void myLock() {
+        Thread thread = Thread.currentThread();
+        System.out.println(Thread.currentThread().getName() + "==> mylock");
+        //自旋锁
+        while (!atomicReference.compareAndSet(null, thread)) {
+
+        }
+    }
+
+    //解锁
+    public void myUnLock() {
+        Thread thread = Thread.currentThread();
+        System.out.println(Thread.currentThread().getName() + "==> myUnLock");
+        atomicReference.compareAndSet(thread, null);
+    }
+
+
+}
+```
+
+测试
+
+```java
+package com.cxy.lock;
+
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
+
+/**
+ * @program: cxyJuc
+ * @description: 测试自旋锁
+ * @author: cuixy
+ * @create: 2020-09-16 15:21
+ **/
+public class TestSpinLock {
+    public static void main(String[] args) throws InterruptedException {
+        //官方可重入锁。
+//        ReentrantLock reentrantLock = new ReentrantLock();
+//        reentrantLock.lock();
+//        reentrantLock.unlock();
+
+        //底层使用的自旋锁CAS
+        SpinlockDemo lock = new SpinlockDemo();
+
+        new Thread(() -> {
+            lock.myLock();
+
+            try {
+                TimeUnit.SECONDS.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                lock.myUnLock();
+            }
+
+        }, "T1").start();
+
+        TimeUnit.SECONDS.sleep(1);
+
+        new Thread(() -> {
+            lock.myLock();
+
+            try {
+                TimeUnit.SECONDS.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                lock.myUnLock();
+            }
+
+        }, "T2").start();
+
+
+    }
+
+}
+```
+
+## 死锁
+
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200916153511481.png" alt="image-20200916153511481" style="zoom:50%;" />
+
+死锁测试，怎么排除死锁：
+
+```java
+package com.cxy.lock;
+
+import java.util.concurrent.TimeUnit;
+
+/**
+ * @program: cxyJuc
+ * @description: 死锁测试
+ * @author: cuixy
+ * @create: 2020-09-16 15:36
+ **/
+public class DeadLockDemo {
+    public static void main(String[] args) {
+        String lockA = "lockA";
+        String lockB = "lockB";
+
+        new Thread(new MyThread(lockA, lockB), "T1").start();
+        new Thread(new MyThread(lockB, lockA), "T2").start();
+
+
+    }
+}
+
+class MyThread implements Runnable {
+    private String lockA;
+    private String lockB;
+
+    public MyThread(String lockA, String lockB) {
+        this.lockA = lockA;
+        this.lockB = lockB;
+    }
+
+    @Override
+    public void run() {
+        synchronized (lockA) {
+            System.out.println(Thread.currentThread().getName()
+                    + "lock:" + lockA + "=>get" + lockB);
+        }
+
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        synchronized (lockB) {
+            System.out.println(Thread.currentThread().getName()
+                    + "lock:" + lockB + "=>get" + lockA);
+        }
+
+    }
+}
+```
+
+<img src="https://gitee.com/cuixiaoyan/uPic/raw/master/uPic/image-20200916154933018.png" alt="image-20200916154933018" style="zoom:50%;" />
