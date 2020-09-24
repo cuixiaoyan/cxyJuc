@@ -2,7 +2,7 @@ package com.cxy.jvm;
 
 /**
  * @program: cxyJuc
- * @description:
+ * @description: 代码中包含static变量的时候，就会有clinit方法
  * @author: cuixy
  * @create: 2020-09-21 15:11
  **/
